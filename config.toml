@@ -1,0 +1,54 @@
+# FRIDAY configuration file
+# Copy this to ~/.config/friday/config.toml and edit as needed.
+# Unset values fall back to built-in defaults.
+
+[llm]
+provider          = "ollama"
+model             = "llama3:8b-instruct-q5_K_M"
+base_url          = "http://localhost:11434"
+timeout_seconds   = 120
+
+[memory]
+db_path        = "~/.friday/memory.db"
+session_window = 20          # max recent turns kept in RAM
+
+[audit]
+db_path = "~/.friday/audit.db"
+
+[policy]
+# Directories whose contents must NEVER be sent anywhere
+blocked_directories = [
+    "~/.ssh",
+    "~/.gnupg",
+    "~/.aws",
+    "~/.config/friday/secrets",
+]
+
+# File extensions that are always refused
+blocked_extensions = [".key", ".pem", ".pfx", ".p12", ".kdbx"]
+
+# Maximum size of a file that may be read into memory (MB)
+max_file_size_mb = 100
+
+# Maximum rows allowed in an Excel sheet operation
+max_excel_rows = 100_000
+
+# Whether delete / move operations require explicit user confirmation
+require_confirmation_on_delete = true
+
+# Master switch for cloud model access (off by default)
+cloud_enabled = false
+
+[sandbox]
+# Only paths under these directories may be accessed by file_tool
+fs_whitelist = [
+    "~/Documents",
+    "~/Downloads",
+    "~/Desktop",
+]
+
+# Maximum number of tool calls that may run in parallel
+max_parallel_tools = 3
+
+# Per-tool call timeout in seconds
+tool_timeout_seconds = 30
